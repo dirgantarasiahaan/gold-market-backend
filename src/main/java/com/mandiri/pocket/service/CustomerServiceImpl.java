@@ -26,7 +26,7 @@ public class CustomerServiceImpl implements CustomerService{
     CustomerRepository customerRepository;
 
     @Override
-    public Customer findCustomerById(Integer id) {
+    public Customer findCustomerById(String id) {
         validatePresent(id);
         Customer customer = customerRepository.findById(id).get();
         return customer;
@@ -59,14 +59,14 @@ public class CustomerServiceImpl implements CustomerService{
             
     }
 
-    private void validatePresent(Integer id) {
+    private void validatePresent(String id) {
         if (!customerRepository.findById(id).isPresent()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(notFoundMessage, id));
         }
     }
 
     @Override
-    public void removeCustomer(Integer id ) {
+    public void removeCustomer(String id ) {
         customerRepository.deleteById(id);
     }
 

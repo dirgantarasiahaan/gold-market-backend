@@ -10,10 +10,10 @@ import java.util.List;
 
 public interface CustomerService {
 
-    public Customer findCustomerById(Integer id);
+    public Customer findCustomerById(String id);
 //    public List<Customer> findAllCustomer(String firstName, String email, Date startDate, Date endDate, Pageable pageable);
 public Page<Customer> findAllCustomer(CustomerSearchDto customer, Pageable pageable);
     public void createCustomer(Customer customer);
     public void updateCustomer(Customer customer);
-    public void removeCustomer(Integer id);
+    public void removeCustomer(String id);
 }

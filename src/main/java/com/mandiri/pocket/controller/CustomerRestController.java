@@ -23,7 +23,7 @@ public class CustomerRestController {
     CustomerService customerService;
 
     @GetMapping("/customer/{id}")
-    public Customer getCustomerById(@PathVariable(name = "id") Integer id){
+    public Customer getCustomerById(@PathVariable(name = "id") String id){
         return customerService.findCustomerById(id);
     }
 
@@ -53,7 +53,6 @@ public class CustomerRestController {
     @PostMapping("/customer")
     public void saveCustomer(@RequestBody Customer customer){
          customerService.createCustomer(customer);
-        HttpStatus.CREATED.toString();
     }
 
     @PutMapping("/customer/update")
@@ -62,7 +61,7 @@ public class CustomerRestController {
     }
 
     @DeleteMapping("/customer/delete/{id}")
-    public void deleteCustomer(@PathVariable(name = "id") Integer id){
+    public void deleteCustomer(@PathVariable(name = "id") String id){
         customerService.removeCustomer(id);
     }
 }

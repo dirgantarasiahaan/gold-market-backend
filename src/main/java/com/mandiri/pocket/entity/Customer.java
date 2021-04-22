@@ -1,18 +1,18 @@
 package com.mandiri.pocket.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "m_customer")
+@Table(name = "m_customers")
 public class Customer {
 
     @Id
-    @Column(name = "customer_id")
-    private Integer id;
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    private String id;
 
     @Column(name = "first_name")
     private String firstName;
@@ -30,11 +30,11 @@ public class Customer {
     private String password;
     private String email;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -100,20 +100,5 @@ public class Customer {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", birthDate=" + birthDate +
-                ", address='" + address + '\'' +
-                ", status=" + status +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                '}';
     }
 }
