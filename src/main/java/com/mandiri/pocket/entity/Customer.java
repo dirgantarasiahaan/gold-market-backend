@@ -23,7 +23,6 @@ public class Customer {
     @Column(name = "birth_date")
     private Date birthDate;
 
-
     private String address;
     private Integer status;
     private String username;

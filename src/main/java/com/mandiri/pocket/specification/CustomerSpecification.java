@@ -3,7 +3,6 @@ package com.mandiri.pocket.specification;
 import com.mandiri.pocket.dto.CustomerSearchDto;
 import com.mandiri.pocket.entity.Customer;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
