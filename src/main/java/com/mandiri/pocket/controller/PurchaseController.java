@@ -3,6 +3,9 @@ package com.mandiri.pocket.controller;
 import com.mandiri.pocket.entity.Purchase;
 import com.mandiri.pocket.service.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +23,9 @@ public class PurchaseController {
     }
 
     @GetMapping("/purchases")
-    public List<Purchase> findAllPurchase(){
-        return purchaseService.findAllPurchase();
+    public Page<Purchase> findAllPurchase(@RequestParam(name = "page", defaultValue = "0") Integer page,
+                                          @RequestParam(name = "size", defaultValue = "10") Integer size){
+        Pageable pageable = PageRequest.of(page, size);
+        return purchaseService.findAllPurchase(pageable);
     }
 }

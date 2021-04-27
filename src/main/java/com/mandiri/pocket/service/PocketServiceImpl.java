@@ -4,6 +4,8 @@ import com.mandiri.pocket.entity.Customer;
 import com.mandiri.pocket.entity.Pocket;
 import com.mandiri.pocket.repository.PocketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -30,8 +32,8 @@ public class PocketServiceImpl implements PocketService{
     }
 
     @Override
-    public List<Pocket> getAllPocket() {
-        return null;
+    public Page<Pocket> getAllPocket(Pageable pageable) {
+        return pocketRepository.findAll(pageable);
     }
 
     @Override
