@@ -1,11 +1,9 @@
 package com.mandiri.pocket.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "m_pockets")
@@ -16,9 +14,18 @@ public class Pocket {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
     private String pocketName;
+
     private Double pocketQty;
-    private String customerId;
-    private String productId;
+
+    @ManyToOne
+    @JsonIgnoreProperties("pockets")
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
 
     public String getId() {
         return id;
@@ -44,19 +51,19 @@ public class Pocket {
         this.pocketQty = pocketQty;
     }
 
-    public String getCustomerId() {
-        return customerId;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
-    public String getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }

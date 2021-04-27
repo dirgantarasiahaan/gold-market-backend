@@ -1,9 +1,13 @@
 package com.mandiri.pocket.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "m_customers")
@@ -28,6 +32,17 @@ public class Customer {
     private String username;
     private String password;
     private String email;
+
+    @OneToMany(mappedBy = "customer")
+    private Set<Pocket> pockets = new HashSet<>();
+
+    public Set<Pocket> getPockets() {
+        return pockets;
+    }
+
+    public void setPockets(Set<Pocket> pockets) {
+        this.pockets = pockets;
+    }
 
     public String getId() {
         return id;

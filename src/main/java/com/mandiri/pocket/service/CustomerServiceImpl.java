@@ -2,20 +2,14 @@ package com.mandiri.pocket.service;
 
 import com.mandiri.pocket.dto.CustomerSearchDto;
 import com.mandiri.pocket.entity.Customer;
-import com.mandiri.pocket.exception.CustomerNotFoundException;
 import com.mandiri.pocket.repository.CustomerRepository;
 import com.mandiri.pocket.specification.CustomerSpecification;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Date;
-import java.util.List;
 
 @Service
 public class CustomerServiceImpl implements CustomerService{
@@ -34,15 +28,7 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public Page<Customer> findAllCustomer(CustomerSearchDto customerSearchForm, Pageable pageable) {
-//    public List<Customer> findAllCustomer(String firstname, String email, Date startDate, Date endDate, Pageable pageable) {
-//        return customerRepository.findAll();
-//        return customerRepository.findAllByFirstNameStartingWithAndEmailContaining(firstname, email, pageable);
-//        return customerRepository.findAllByFirstNameStartingWithAndEmailContainingAndBirthDateBetween(customer, pageable);
         return customerRepository.findAll(CustomerSpecification.findCustomers(customerSearchForm), pageable);
-
-//        Specification<Customer> specification = CustomerSpecification.findCustomers(customer),
-
-
     }
 
 

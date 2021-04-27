@@ -2,6 +2,7 @@ package com.mandiri.pocket.controller;
 
 import com.mandiri.pocket.dto.CustomerSearchDto;
 import com.mandiri.pocket.entity.Customer;
+import com.mandiri.pocket.entity.Product;
 import com.mandiri.pocket.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,25 +29,11 @@ public class CustomerRestController {
     }
 
     @GetMapping("/customers")
-    public Page<Customer> getAllCustomer(
-//                                          @RequestParam(name = "firstName", defaultValue = "") String firstName,
-//                                         @RequestParam(name = "email", defaultValue = "") String email,
-//                                         @RequestParam(name = "startDate") String startDate,
-//                                         @RequestParam(name = "endDate") String endDate,
-                                        @RequestBody CustomerSearchDto customerSearchForm,
+    public Page<Customer> getAllCustomer(@RequestBody CustomerSearchDto customerSearchForm,
                                          @RequestParam(name = "page", defaultValue = "0") Integer page,
                                          @RequestParam(name = "size", defaultValue = "10") Integer size) throws ParseException {
 
         Pageable pageable = PageRequest.of(page,size);
-//
-//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-
-//        return customerService.findAllCustomer(firstName,
-//                email,
-//                formatter.parse(startDate),
-//                formatter.parse(endDate),
-//                pageable);
-
         return customerService.findAllCustomer(customerSearchForm, pageable);
     }
 
