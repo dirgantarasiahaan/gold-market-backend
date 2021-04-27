@@ -1,0 +1,54 @@
+======== Pocket ========
+- Create New Pocket
+POST : IP:PORT/Pocket
+Body : 
+{
+    "pocketName" : "",
+    "customer" :{
+        "id" : ""
+    },
+    "product" : {
+        "id" : ""
+    }
+}
+
+- Find Pocket By ID
+GET : IP:PORT/pocket/{id}
+
+- Find All Pocket by customer ID 
+GET : IP:PORT/customer/{id}}/pockets
+
+
+======== Product ========
+- Create New Product
+POST : IP:PORT/product
+Body : 
+{
+    "productName" : "",
+    "productPriceBuy":  ,
+    "productPriceSell":  ,
+    "productImage": "",
+    "productStatus": 
+    
+}
+
+======== Purchase ========
+
+- Create New Purchase 
+POST : IP:PORT/customer/{id}/purchases
+Body : 
+{
+    "purchaseType" : 1,
+    "purchaseDetails": [
+        {
+            "quantityInGram": ,
+            "pocket":{ 
+                "id":""
+            } 
+        }
+    ]
+}
+
+
+
+
