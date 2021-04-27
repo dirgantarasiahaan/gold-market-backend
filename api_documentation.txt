@@ -1,6 +1,6 @@
 ======== Pocket ========
 - Create New Pocket
-POST : IP:PORT/Pocket
+POST : IP:PORT/pocket
 Body : 
 {
     "pocketName" : "",
