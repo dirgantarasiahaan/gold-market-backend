@@ -1,5 +1,6 @@
 package com.mandiri.pocket.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -32,6 +33,7 @@ public class Customer {
     private String username;
     private String password;
     private String email;
+    private String phoneNumber;
 
     @OneToMany(mappedBy = "customer")
     private Set<Pocket> pockets = new HashSet<>();
@@ -114,5 +116,13 @@ public class Customer {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }
