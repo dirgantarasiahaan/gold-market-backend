@@ -1,5 +1,8 @@
 package com.mandiri.pocket.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mandiri.pocket.dto.PurchaseDto;
 import com.mandiri.pocket.entity.Customer;
 import com.mandiri.pocket.entity.Pocket;
 import com.mandiri.pocket.entity.Purchase;
@@ -12,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -40,11 +44,14 @@ public class PurchaseServiceImpl implements PurchaseService{
     RestTemplate restTemplate;
 
     @Autowired
-    CustomeMailService customeMailService;
+    ObjectMapper objectMapper;
+
+    @Autowired
+    KafkaTemplate kafkaTemplate;
 
 
     @Override
-    public Purchase purchase(Purchase purchase, String customerId) {
+    public Purchase purchase(Purchase purchase, String customerId) throws JsonProcessingException {
         Customer customer = customerService.findCustomerById(customerId);
         purchase.setCustomer(customer);
         purchase.setPurchaseDate(new Date());
@@ -84,7 +91,16 @@ public class PurchaseServiceImpl implements PurchaseService{
         restTemplate.exchange(builder.toUriString(), HttpMethod.POST, null, String.class);
 
 //       SendEmail
-        customeMailService.SendEmail(purchase);
+//        customeMailService.SendEmail(purchase);
+
+        PurchaseDto purchaseDto = new PurchaseDto();
+        purchaseDto.setEmailTo(purchase.getCustomer().getEmail());
+        purchaseDto.setCustomerName(purchase.getCustomer().getUsername());
+        purchaseDto.setTotal(amount);
+
+        String jsonPurchase = objectMapper.writeValueAsString(purchaseDto);
+        kafkaTemplate.send("simple-notification", jsonPurchase);
+
         return purchaseRepository.save(purchase);
     }
 

@@ -1,5 +1,6 @@
 package com.mandiri.pocket.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mandiri.pocket.entity.Purchase;
 import com.mandiri.pocket.service.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class PurchaseController {
 
     @PostMapping("/customer/{id}/purchases")
     public Purchase createPurchase(@PathVariable(name = "id") String customerId,
-                                   @RequestBody Purchase purchase){
+                                   @RequestBody Purchase purchase) throws JsonProcessingException {
         return purchaseService.purchase(purchase, customerId);
     }
 
