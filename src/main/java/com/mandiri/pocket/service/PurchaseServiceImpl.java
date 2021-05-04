@@ -49,6 +49,9 @@ public class PurchaseServiceImpl implements PurchaseService{
     @Autowired
     KafkaTemplate kafkaTemplate;
 
+    @Autowired
+    WalletService walletService;
+
 
     @Override
     public Purchase purchase(Purchase purchase, String customerId) throws JsonProcessingException {
@@ -83,15 +86,17 @@ public class PurchaseServiceImpl implements PurchaseService{
                     String.format(notFoundPurchaseType, purchase.getPurchaseType()));
         }
 
-        String url = "http://localhost:8081/debit";
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
-                .queryParam("phoneNumber", customer.getPhoneNumber())
-                .queryParam("amount", amount);
-
-        restTemplate.exchange(builder.toUriString(), HttpMethod.POST, null, String.class);
+//        String url = "http://localhost:8081/debit";
+//        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
+//                .queryParam("phoneNumber", customer.getPhoneNumber())
+//                .queryParam("amount", amount);
+//
+//        restTemplate.exchange(builder.toUriString(), HttpMethod.POST, null, String.class);
 
 //       SendEmail
 //        customeMailService.SendEmail(purchase);
+
+        walletService.debitWaller(customer, amount);
 
         PurchaseDto purchaseDto = new PurchaseDto();
         purchaseDto.setEmailTo(purchase.getCustomer().getEmail());

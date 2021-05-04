@@ -4,6 +4,7 @@ import com.mandiri.pocket.entity.Customer;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -12,7 +13,13 @@ import java.util.List;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, String>, JpaSpecificationExecutor<Customer> {
 
-    public List<Customer> findAllByFirstNameStartingWithAndEmailContaining(String firstname, String email, Pageable pageable);
-//    public List<Customer> findAllByFirstNameStartingWithAndEmailContainingAndBirthDateBetween(String firstname, String email, Date startDate, Date endDate, Pageable pageable);
+//    public List<Customer> findAllByFirstNameStartingWithAndEmailContaining(String firstname, String email, Pageable pageable);
+////    public List<Customer> findAllByFirstNameStartingWithAndEmailContainingAndBirthDateBetween(String firstname, String email, Date startDate, Date endDate, Pageable pageable);
+
+    @Query("SELECT c FROM Customer c")
+    List<Customer> findActiveCustomer();
+
+    @Query(value = "SELECT * FROM m_customers", nativeQuery = true)
+    List<Customer> findAllCustomer();
 
 }
